@@ -35,3 +35,11 @@ jobs:
       run: |
         chmod +x "${GITHUB_WORKSPACE}/.github/workflows/script.sh"
         sh "${GITHUB_WORKSPACE}/.github/workflows/script.sh"
+
+    - name: get the sha
+      run: |
+        echo "$GITHUB_CONTEXT" 
+        echo "$GITHUB_CONTEXT" | jq '.event.before' 
+#| jq '.event.commits[].id' | tail -2 | head -1 |sed 's/\"//g'
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
