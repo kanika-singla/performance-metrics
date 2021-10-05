@@ -35,8 +35,7 @@ jobs:
       id: vars
       shell: bash
       run: |
-        echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        echo "::set-output name=sha_short::$(git rev-parse --short HEAD~1)"
+        echo "::set-output name=sha_short::$(git log -n 1 --skip 1)"
 
     - name: Another step
       run: |
