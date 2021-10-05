@@ -35,9 +35,15 @@ jobs:
       id: vars
       shell: bash
       run: |
-        echo "::set-output name=sha_short::$(git log -n 1 --skip 1)"
+        echo "::set-output name=sha_short::$(git rev-parse --short HEAD~1)"
 
     - name: Another step
       run: |
-        echo "Branch: ${{ steps.vars.outputs.branch }}"
         echo "Sha: ${{ steps.vars.outputs.sha_short }}"
+
+    - name: running script
+      run: |
+      chmod +x "${GITHUB_WORKSPACE}/.github/workflows/script.sh"
+
+      # run script
+      "${GITHUB_WORKSPACE}/.github/workflows/script.sh"
