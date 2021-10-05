@@ -23,3 +23,10 @@ jobs:
       if: ${{ always() }}
       id: datesec
       run: echo "::set-output name=datesec::$(($(date "+%s%N")/1000000))"
+
+
+    - name: Successful deployment
+      run: echo URLDATE
+      env:
+        TIMESTAMP: ${{ steps.datesec.outputs.datesec }}
+        URLDATE: ${{ steps.date.outputs.date }}
