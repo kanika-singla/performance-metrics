@@ -1,3 +1,3 @@
 echo "HELLOW"
-COMMIT=$(git rev-parse --short HEAD~1)
+COMMIT=$(git rev-parse --short HEAD)
 echo "${COMMIT}"
