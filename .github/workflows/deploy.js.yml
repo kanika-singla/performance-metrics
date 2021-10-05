@@ -38,7 +38,8 @@ jobs:
 
     - name: get the sha
       run: |
-        echo "$GITHUB_CONTEXT"
-#| jq '.event.commits[].id' | tail -2 | head -2 |sed 's/\"//g'
+        echo "$GITHUB_CONTEXT" 
+        echo "$GITHUB_CONTEXT" | jq '.event.before' 
+#| jq '.event.commits[].id' | tail -2 | head -1 |sed 's/\"//g'
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
