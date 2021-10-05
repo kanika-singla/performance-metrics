@@ -1,0 +1,44 @@
+name: Performance Metrics CI
+
+on:
+  push:
+    branches: [ dev, qa, prod ]
+
+jobs:
+  BUILD:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 
+      uses: actions/setup-node@v1
+      with:
+          node-version: 14.x
+
+    - name: Get current date
+      if: ${{ always() }}
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+    - name: Get current date seconds
+      if: ${{ always() }}
+      id: datesec
+      run: echo "::set-output name=datesec::$(($(date "+%s%N")/1000000))"
+
+
+    - name: Successful deployment
+      run: echo URLDATE
+      env:
+        TIMESTAMP: ${{ steps.datesec.outputs.datesec }}
+        URLDATE: ${{ steps.date.outputs.date }}
+
+    - name: Declare some variables
+      id: vars
+      shell: bash
+      run: |
+        echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+    - name: Another step
+      run: |
+        echo "Branch: ${{ steps.vars.outputs.branch }}"
+        echo "Sha: ${{ steps.vars.outputs.sha_short }}"
